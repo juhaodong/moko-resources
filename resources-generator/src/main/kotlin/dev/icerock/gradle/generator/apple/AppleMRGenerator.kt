@@ -145,18 +145,18 @@ class AppleMRGenerator(
 
                 linkTask.doLast(CopyResourcesFromKLibsToFrameworkAction())
 
-                if (framework.isStatic) {
-                    val resourcesExtension: MultiplatformResourcesPluginExtension =
-                        project.extensions.getByType()
-                    if (resourcesExtension.getIsStaticFrameworkWarningEnabled().get()) {
-                        project.logger.warn(
-                            """
+
+                val resourcesExtension: MultiplatformResourcesPluginExtension =
+                    project.extensions.getByType()
+                if (resourcesExtension.getIsStaticFrameworkWarningEnabled().get()) {
+                    project.logger.warn(
+                        """
 $linkTask produces static framework, Xcode should have Build Phase with copyFrameworkResourcesToApp gradle task call. Please read readme on https://github.com/icerockdev/moko-resources
 """
-                        )
-                    }
-                    createCopyFrameworkResourcesTask(linkTask)
+                    )
                 }
+                createCopyFrameworkResourcesTask(linkTask)
+
             }
     }
 
